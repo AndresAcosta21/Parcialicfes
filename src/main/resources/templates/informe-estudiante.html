@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Informe del Estudiante</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Reset de márgenes y padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4ff;
+            color: #1d1f21;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar {
+            background-color: rgba(38, 31, 89, 0.9);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .header {
+            background-color: rgba(38, 31, 89, 0.8);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0044cc;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #333;
+            margin: 15px 0;
+        }
+
+        .info p,
+        .scores p {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #333;
+        }
+
+        .aprobado {
+            color: green;
+        }
+
+        .reprobado {
+            color: red;
+        }
+
+        .nivel-1 {
+            color: #f44336;
+        }
+
+        .nivel-2 {
+            color: #ff9800;
+        }
+
+        .nivel-3 {
+            color: #ffeb3b;
+        }
+
+        .nivel-4 {
+            color: #4CAF50;
+        }
+
+        .text-success {
+            color: green;
+        }
+
+        .text-danger {
+            color: red;
+        }
+
+        .btn-volver {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #0044cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-volver:hover {
+            background-color: #003399;
+        }
+
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 10px 0;
+            background-color: #333;
+            color: #fff;
+            border-radius: 8px;
+        }
+
+        /* Responsividad: ajustes para diferentes pantallas */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .info p,
+            .scores p {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info p,
+            .scores p {
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <h1>PRUEBAS SABER PRO</h1>
+    </nav>
+
+    <div class="container">
+        <h1>Informe del Estudiante</h1>
+
+        <div class="info">
+            <p><strong>Nombre:</strong> <span th:text="${nombre}"></span></p>
+            <p><strong>Apellido:</strong> <span th:text="${apellido}"></span></p>
+        </div>
+
+        <h2>Puntajes y Niveles</h2>
+
+        <div class="scores">
+            <p><strong>Comunicación Escrita:</strong>
+                <span th:text="${comunicacion == -1 ? 'Anulado' : comunicacion}"></span>
+                <span th:class="${comunicacionLevel == 'Nivel 1' ? 'nivel-1' : (comunicacionLevel == 'Nivel 2' ? 'nivel-2' : (comunicacionLevel == 'Nivel 3' ? 'nivel-3' : 'nivel-4'))}">
+                    <span th:text="${comunicacionLevel}"></span>
+                </span>
+            </p>
+
+            <p><strong>Razonamiento Cuantitativo:</strong>
+                <span th:text="${razonamiento == -1 ? 'Anulado' : razonamiento}"></span>
+                <span th:class="${razonamientoLevel == 'Nivel 1' ? 'nivel-1' : (razonamientoLevel == 'Nivel 2' ? 'nivel-2' : (razonamientoLevel == 'Nivel 3' ? 'nivel-3' : 'nivel-4'))}">
+                    <span th:text="${razonamientoLevel}"></span>
+                </span>
+            </p>
+
+            <p><strong>Lectura Crítica:</strong>
+                <span th:text="${lectura == -1 ? 'Anulado' : lectura}"></span>
+                <span th:class="${lecturaLevel == 'Nivel 1' ? 'nivel-1' : (lecturaLevel == 'Nivel 2' ? 'nivel-2' : (lecturaLevel == 'Nivel 3' ? 'nivel-3' : 'nivel-4'))}">
+                    <span th:text="${lecturaLevel}"></span>
+                </span>
+            </p>
+
+            <p><strong>Competencias Ciudadanas:</strong>
+                <span th:text="${competencias == -1 ? 'Anulado' : competencias}"></span>
+                <span th:class="${competenciasLevel == 'Nivel 1' ? 'nivel-1' : (competenciasLevel == 'Nivel 2' ? 'nivel-2' : (competenciasLevel == 'Nivel 3' ? 'nivel-3' : 'nivel-4'))}">
+                    <span th:text="${competenciasLevel}"></span>
+                </span>
+            </p>
+
+            <p><strong>Inglés:</strong>
+                <span th:text="${ingles == -1 ? 'Anulado' : ingles}"></span>
+                <span th:class="${inglesLevel == 'Nivel 1' ? 'nivel-1' : (inglesLevel == 'Nivel 2' ? 'nivel-2' : (inglesLevel == 'Nivel 3' ? 'nivel-3' : 'nivel-4'))}">
+                    <span th:text="${inglesLevel}"></span>
+                </span>
+            </p>
+
+            <p><strong>Formulación De Proyectos De Ingeniería:</strong>
+                <span th:text="${formulacion == -1 ? 'Anulado' : formulacion}"></span>
+                <span th:class="${formulacionLevel == 'Nivel 1' ? 'nivel-1' : (formulacionLevel == 'Nivel 2' ? 'nivel-2' : (formulacionLevel == 'Nivel 3' ? 'nivel-3' : 'nivel-4'))}">
+                    <span th:text="${formulacionLevel}"></span>
+                </span>
+            </p>
+
+            <p><strong>Pensamiento Científico:</strong>
+                <span th:text="${pensamiento == -1 ? 'Anulado' : pensamiento}"></span>
+                <span th:class="${pensamientoLevel == 'Nivel 1' ? 'nivel-1' : (pensamientoLevel == 'Nivel 2' ? 'nivel-2' : (pensamientoLevel == 'Nivel 3' ? 'nivel-3' : 'nivel-4'))}">
+                    <span th:text="${pensamientoLevel}"></span>
+                </span>
+            </p>
+
+            <p><strong>Diseño De Software:</strong>
+                <span th:text="${Diseno == -1 ? 'Anulado' : Diseno}"></span>
+                <span th:class="${DisenoLevel == 'Nivel 1' ? 'nivel-1' : (DisenoLevel == 'Nivel 2' ? 'nivel-2' : (DisenoLevel == 'Nivel 3' ? 'nivel-3' : 'nivel-4'))}">
+                    <span th:text="${DisenoLevel}"></span>
+                </span>
+            </p>
+
+            <p><strong>Media Nacional > 125 para aprobar en las UTS:</strong></p>
+            <span th:text="${puntaje == -1 ? 'Anulado' : puntaje}"></span>
+            <span th:text="${puntaje == -1 ? 'Anulado' : (puntaje > 125 ? 'APROBÓ EN LAS UTS' : 'REPROBÓ EN LAS UTS')}" th:class="${puntaje == -1 ? 'text-danger' : (puntaje > 125 ? 'text-success' : 'text-danger')}"></span>
+
+        </div>
+		<script>
+					var niveles = document.querySelectorAll(".level");
+					niveles.forEach(function (nivel) {
+						var textoNivel = nivel.textContent.trim();
+						var infoDiv = nivel.parentElement.parentElement;
+		
+						if (textoNivel === "-1" || textoNivel === "Anulado") {
+							textoNivel = "Anulado";
+							nivel.textContent = textoNivel;
+						}
+		
+						switch (textoNivel) {
+							case "Anulado":
+								infoDiv.querySelector(".info").classList.add("color-anulado");
+								break;
+							case "Nivel 1":
+								infoDiv.querySelector(".info").classList.add("nivel-color-1");
+								break;
+							case "Nivel 2":
+								infoDiv.querySelector(".info").classList.add("nivel-color-2");
+								break;
+							case "Nivel 3":
+								infoDiv.querySelector(".info").classList.add("nivel-color-3");
+								break;
+							case "Nivel 4":
+								infoDiv.querySelector(".info").classList.add("nivel-color-4");
+								break;
+							default:
+								break;
+						}
+					});
+				</script>
+
+        <button class="btn-volver" onclick="history.back()">Regresar</button>
+    </div>
+
+   
+</body>
+
+</html>
+
+		
+
+		
+	
